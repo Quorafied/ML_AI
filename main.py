@@ -1,6 +1,7 @@
 import pyautogui
 import pydirectinput
 import time
+import cv2 as cv
 
 pyautogui.FAILSAFE = False
 
@@ -55,34 +56,14 @@ def PvP_AutoThrough():
     wins = 0
     loses = 0
 
+
     T1_EGG_C = 0
-    T2_EGG_C = 0
-    T3_EGG_C = 0
-    T4_EGG_C = 0
-    T5_EGG_C = 0
-    T6_EGG_C = 0
-    T7_EGG_C = 0
-
-    #def Check_Egg(t1c, t2c, t3c, t4c, t5c, t6c, t7c):
-    #    for egg in LIST_EGGS:
-    #        if pyautogui.locateOnScreen(egg, confidence=0.8):
-    #            if egg[13] == "1":
-    #                T1_EGG_C += 1
-    #            if egg[13] == "2":
-    #                T2_EGG_C += 1
-    #            if egg[13] == "3":
-    #                T3_EGG_C += 1
-    #            if egg[13] == "4":
-    #                T4_EGG_C += 1
-    #            if egg[13] == "5":
-    #                T5_EGG_C += 1
-    #            #if egg[13] == "6":
-    #            #    t6c += 1
-    #            #if egg[13] == "7":
-    #            #    t7c += 1
-
-    #def Output_Eggs(t1c, t2c, t3c, t4c, t5c, t6c, t7c):
-    #    print("Tier1: {}, Tier2: {}, Tier3: {}, Tier4: {}, Tier5: {}, Tier6: , Tier7: ".format(t1c, t2c, t3c, t4c, t5c))
+    T2_EGG_C = 0    
+    T3_EGG_C = 0    
+    T4_EGG_C = 0    
+    T5_EGG_C = 0    
+    T6_EGG_C = 0    
+    T7_EGG_C = 0     
 
     LIST_EGGS = ["PVP_Samples/T1_EGG.png",
                  "PVP_Samples/T2_EGG.png",
@@ -90,6 +71,28 @@ def PvP_AutoThrough():
                  "PVP_Samples/T4_EGG.png",
                  "PVP_Samples/T5_EGG.png"
                  ]
+    def Check_Egg(t1c, t2c, t3c, t4c, t5c):
+        for egg in LIST_EGGS:
+            if pyautogui.locateOnScreen(egg, confidence=0.95):
+                if egg[13] == "1":
+                    return 1
+                if egg[13] == "2":
+                    return 2
+                if egg[13] == "3":
+                    return 3
+                if egg[13] == "4":
+                    return 4
+                if egg[13] == "5":
+                    return 5
+                #if egg[13] == "6":
+                #    t6c += 1
+                #if egg[13] == "7":
+                #    t7c += 1
+
+    def Output_Eggs(t1c, t2c, t3c, t4c, t5c):
+        print("Tier1: {}, Tier2: {}, Tier3: {}, Tier4: {}, Tier5: {}, Tier6: , Tier7: ".format(t1c, t2c, t3c, t4c, t5c))
+
+    
 
     #"PVP_Samples/T6_EGG.png"
     #"PVP_Samples/T7_EGG.png"
@@ -146,7 +149,25 @@ def PvP_AutoThrough():
             time.sleep(3)
 
             if pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8):
-                #Check_Egg(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C, T6_EGG_C, T7_EGG_C)
+                Egg_Outcome = Check_Egg(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C)
+                print(Egg_Outcome)                
+
+                if Egg_Outcome == 1:
+                    T1_EGG_C += 1
+                    print(str(T1_EGG_C) + "xT1")
+                if Egg_Outcome == 2:
+                    T2_EGG_C += 1
+                    print(str(T2_EGG_C) + "xT2")
+                if Egg_Outcome == 3:
+                    T3_EGG_C += 1
+                    print(str(T3_EGG_C) + "xT3")
+                if Egg_Outcome == 4:
+                    T4_EGG_C += 1
+                    print(str(T4_EGG_C) + "xT4")
+                if Egg_Outcome == 5:
+                    T5_EGG_C += 1
+                    print(str(T5_EGG_C) + "xT5")
+
 
                 (x, y) = pyautogui.position()
                 pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8))
@@ -170,7 +191,7 @@ def PvP_AutoThrough():
                 loses += 1
                 print("Wins: {}, Loses: {}, Points gained: {}".format(wins, loses, points))
 
-            #Output_Eggs(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C, T6_EGG_C, T7_EGG_C)
+            Output_Eggs(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C)
 
         else:
             waitForScreen("PVP_Samples/Start_Battle")
@@ -208,7 +229,24 @@ def PvP_AutoThrough():
             time.sleep(3)
 
             if pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8):
-                #Check_Egg(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C, T6_EGG_C, T7_EGG_C)
+                Egg_Outcome = Check_Egg(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C)
+                print(Egg_Outcome)                
+
+                if Egg_Outcome == 1:
+                    T1_EGG_C += 1
+                    print(str(T1_EGG_C) + "xT1")
+                if Egg_Outcome == 2:
+                    T2_EGG_C += 1
+                    print(str(T2_EGG_C) + "xT2")
+                if Egg_Outcome == 3:
+                    T3_EGG_C += 1
+                    print(str(T3_EGG_C) + "xT3")
+                if Egg_Outcome == 4:
+                    T4_EGG_C += 1
+                    print(str(T4_EGG_C) + "xT4")
+                if Egg_Outcome == 5:
+                    T5_EGG_C += 1
+                    print(str(T5_EGG_C) + "xT5")
 
                 (x, y) = pyautogui.position()
                 pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8))
@@ -231,7 +269,7 @@ def PvP_AutoThrough():
                 loses += 1
                 print("Wins: {}, Loses: {}, Points gained: {}".format(wins, loses, points))
 
-            #Output_Eggs(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C, T6_EGG_C, T7_EGG_C)
+            Output_Eggs(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C)
 
         if pyautogui.locateOnScreen("PVP_Samples/League.png", confidence=0.7):
 
