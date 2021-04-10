@@ -8,6 +8,7 @@ pyautogui.FAILSAFE = False
 time.sleep(3)
 
 print(pyautogui.position())
+print(pyautogui.position())
 
 # count = 0
 # wins = 0
@@ -36,6 +37,7 @@ def waitForScreen(obj):
             print(str(tries))
             if tries > 300:
                 break
+    return tries
 
 
 # ------------------------------------------
@@ -350,114 +352,127 @@ def Stardust_Dungeon():
     pyautogui.moveTo(x, y)
     Three_Nodes()
 
-def MonsterWood_AutoThrough():
+def MonsterWood_AutoThrough2():
+    List_EXIT_SINGLE = [
+        "MW_Samples/MW_EXIT_SINGLE.png",
+        "MW_Samples/MW_EXIT_SINGLE2.png",
+        "MW_Samples/MW_EXIT_SINGLE3.png",
+        "MW_Samples/MW_EXIT_Single4.png",
+        "MW_Samples/MW_EXIT_GOOGLEPLAY.png",
+        "MW_Samples/MW_EXIT_WHITE_LEARNMORE.png",
+        "MW_Samples/MW_EXIT_GRADIENT.png"
+        ]
 
-    MW_ADS_WATCHED = 0
-    time.sleep(1)
+    def reopenPlayScreen():
+        waitForScreen("MW_Samples/MW_PLAYSCREEN_EXIT")
+        time.sleep(2)
+
+        (x, y) = pyautogui.position()
+        pyautogui.click(464, 291) # Click on MW_BUILDING
+        pyautogui.moveTo(x, y)
+
+    def checkDoubleButtonAd():
+        if pyautogui.locateOnScreen("MW_Samples/MW_EXIT_DOUBLE.png", confidence=0.8):
+            return True
+    
+    def checkSingleButtonAd():
+        while True:
+            for exits in List_EXIT_SINGLE:
+                if pyautogui.locateOnScreen(exits, confidence=0.8) != None: 
+                    return True
+                    break
+            break
+
+        return False
+
+    def newTabAd():
+        (x, y) = pyautogui.position()
+
+        # Click on the frame of the window to activate it.
+        pyautogui.click(929, 371)
+        time.sleep(1)
+
+        # Click on the Home tab.
+        pyautogui.click(204, 26)
+        time.sleep(0.4)
+
+        # Click on the Monsters tab.
+        pyautogui.click(362, 26)
+        pyautogui.moveTo(x, y)
+
+        time.sleep(7)
+
+        pydirectinput.press("esc")
 
     while True:
-        print("{} ads watched, Next ad!".format(str(MW_ADS_WATCHED)))
+        MW_ADS_WATCHED = 0
+        Error = False
 
-        # Looking for MW_PLAY
-        tries = 0
+        print("{} ads watched, next ad!".format(str(MW_ADS_WATCHED)))
+
+        # Click on Play Button or error occurs, fixed in upcoming "while True".
+        if waitForScreen("MW_Samples/MW_PLAYBUTTON") == 301:
+            Error = True
 
         while True:
-            if pyautogui.locateOnScreen("MW_Samples/MW_PLAY.png", confidence=0.8):
-                time.sleep(0.5)
-                coords = pyautogui.locateOnScreen("MW_Samples/MW_PLAY.png", confidence=0.8)
-
-
+            
+            # If the Play Button could not be found in 300 tries, reopens the tab and reloops.
+            if Error == True: # Find what type of error before continuing!!
+                reopenPlayScreen()
+                break
+            
+            # Wait 35 seconds for an ad to finish, before doing checks.
+            time.sleep(33)
+            print("Time to checkie checkie")
+            
+            # Checks if the ad closed itself.
+            if pyautogui.locateOnScreen("MW_Samples/MW_COLLECT.png", confidence=0.9):
                 (x, y) = pyautogui.position()
-                pyautogui.click(coords)
-                pyautogui.moveTo(x, y)
 
+                # Click on the frame of the window to activate it.
+                pyautogui.click(929, 371)
                 time.sleep(1)
-                break
-            else:
-                tries += 1
-                print(str(tries))
 
-                if tries == 10:
-                    # Refresh stage
-                    (x, y) = pyautogui.position()
-                    pyautogui.click(858, 74)
-                    pyautogui.moveTo(x, y)
-                    print("Clicked on MW_Samples/MW_EXIT_MAIN")
-
-                    time.sleep(0.6)
-
-                    (x, y) = pyautogui.position()
-                    pyautogui.click(458, 326)
-                    pyautogui.moveTo(x, y)
-                    print("Clicked on MW_BUILDING")
-                    # Successfully clicked on MW_PLAY button, making an ad play.
-
-        while True:
-            # Elapsing 35 second between checking.
-            print("Waiting for MW_Samples/MW_EXIT button")
-            time.sleep(35)
-
-            # NO_EXIT
-            if pyautogui.locateOnScreen("MW_Samples/MW_COLLECT.png", confidence=0.8):
-                time.sleep(0.5)
-
-                coords = pyautogui.locateOnScreen("MW_Samples/MW_COLLECT.png", confidence=0.8)
-
-                (x, y) = pyautogui.position()
-                pyautogui.click(coords)
+                pydirectinput.press("esc")
                 pyautogui.moveTo(x, y)
                 break
 
-            # Google Play Exit
-            if pyautogui.locateOnScreen("MW_Samples/MW_EXIT_GOOGLEPLAY.png", confidence=0.8):
-                time.sleep(0.5)
-
-                coords = pyautogui.locateOnScreen("MW_Samples/MW_EXIT_GOOGLEPLAY.png", confidence=0.8)
-
+            # Checks if a SingleButton Ad popped up.
+            if checkSingleButtonAd() == True:
+                print("SINGLE")
                 (x, y) = pyautogui.position()
-                pyautogui.click(coords)
+
+                # Click on the frame of the window to activate it.
+                pyautogui.click(929, 371)
+                time.sleep(1)
+
+                pydirectinput.press("esc")
                 pyautogui.moveTo(x, y)
                 break
 
-            # White Learn More Exit
-            if pyautogui.locateOnScreen("MW_Samples/MW_EXIT_WHITE_LEARNMORE.png", confidence=0.8):
-                time.sleep(0.5)
-
-                coords = pyautogui.locateOnScreen("MW_Samples/MW_EXIT_WHITE_LEARNMORE.png", confidence=0.8)
-
+            # Checks if a DoubleButton Ad popped up.
+            if checkDoubleButtonAd() == True:
+                print("DOUBLE")
                 (x, y) = pyautogui.position()
-                pyautogui.click(coords)
-                pyautogui.moveTo(x, y)
-                break
 
-            # Gradient Exit
-            if pyautogui.locateOnScreen("MW_Samples/MW_EXIT_GRADIENT.png", confidence=0.8):
+                # Click on the frame of the window to activate it.
+                pyautogui.click(929, 371)
+                time.sleep(1)
+
+                pydirectinput.press("esc")
                 time.sleep(0.5)
-                
-                coords = pyautogui.locateOnScreen("MW_Samples/MW_EXIT_GRADIENT.png", confidence=0.8)
-                
-                (x, y) = pyautogui.position()
-                pyautogui.click(coords)
+                pydirectinput.press("esc")
+
                 pyautogui.moveTo(x, y)
                 break
 
             else:
-                time.sleep(0.5)
+                newTabAd()
+                break
 
-                (x, y) = pyautogui.position()
-                pydirectinput.press("esc")
-                time.sleep(0.4)
-                pydirectinput.press("esc")
-                pyautogui.moveTo(x, y)
-
+        # Waiting for the Reward Popup to properly display.
+        time.sleep(2) 
         waitForScreen("MW_Samples/MW_COLLECT")
-
-        MW_ADS_WATCHED += 1
-
-egg_string = "PVP_Samples/T1_EGG.png"
-
-print(egg_string[13])
-
 
 choice = input(print("""
 1. Buy_100_Rare()
@@ -471,7 +486,7 @@ choice = input(print("""
 if choice == "1": Buy_100_Rare()
 if choice == "2": PvP_AutoThrough()
 if choice == "3": Stardust_Dungeon()
-if choice == "4": MonsterWood_AutoThrough()
+if choice == "4": MonsterWood_AutoThrough2()
 
 
 
