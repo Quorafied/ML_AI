@@ -4,6 +4,7 @@ import time
 import cv2 as cv
 
 pyautogui.FAILSAFE = False
+pydirectinput.FAILSAFE = False
 
 time.sleep(3)
 
@@ -21,10 +22,11 @@ tries = 0
 def waitForScreen(obj):
     tries = 0
     while True:
+        im1 = pyautogui.screenshot("my_screenshot.png", region=(0, 43, 900, 500))
         print("Looking for {}".format(str(obj)))
-        if pyautogui.locateOnScreen("{}.png".format(str(obj)), confidence=0.8):
+        if pyautogui.locateOnScreen("{}.png".format(str(obj)), confidence=0.8, region=(0, 43, 900, 500), grayscale=True):
             time.sleep(0.5)
-            coords = pyautogui.locateOnScreen("{}.png".format(str(obj)), confidence=0.8)
+            coords = pyautogui.locateOnScreen("{}.png".format(str(obj)), confidence=0.8, region=(0, 43, 900, 500), grayscale=True)
 
             (x, y) = pyautogui.position()
             pyautogui.click(coords)
@@ -75,7 +77,7 @@ def PvP_AutoThrough():
                  ]
     def Check_Egg(t1c, t2c, t3c, t4c, t5c):
         for egg in LIST_EGGS:
-            if pyautogui.locateOnScreen(egg, confidence=0.95):
+            if pyautogui.locateOnScreen(egg, confidence=0.95, region=(0, 43, 900, 500), grayscale=True):
                 if egg[13] == "1":
                     return 1
                 if egg[13] == "2":
@@ -112,10 +114,10 @@ def PvP_AutoThrough():
 
         time.sleep(2)
 
-        if pyautogui.locateOnScreen("PVP_Samples/Shield_Yes.png", confidence=0.8):
+        if pyautogui.locateOnScreen("PVP_Samples/Shield_Yes.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True):
 
             (x, y) = pyautogui.position()
-            pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Shield_Yes.png", confidence=0.8))
+            pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Shield_Yes.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True))
             print("Clicked PVP_Samples/Shield_Yes")
             pyautogui.moveTo(x, y)
 
@@ -150,7 +152,7 @@ def PvP_AutoThrough():
 
             time.sleep(3)
 
-            if pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8):
+            if pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True):
                 Egg_Outcome = Check_Egg(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C)
                 print(Egg_Outcome)                
 
@@ -172,7 +174,7 @@ def PvP_AutoThrough():
 
 
                 (x, y) = pyautogui.position()
-                pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8))
+                pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True))
                 print("Clicked PVP_Samples/Collect")
                 pyautogui.moveTo(x, y)
 
@@ -230,7 +232,7 @@ def PvP_AutoThrough():
             pyautogui.moveTo(x, y)
             time.sleep(3)
 
-            if pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8):
+            if pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True):
                 Egg_Outcome = Check_Egg(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C)
                 print(Egg_Outcome)                
 
@@ -251,7 +253,7 @@ def PvP_AutoThrough():
                     print(str(T5_EGG_C) + "xT5")
 
                 (x, y) = pyautogui.position()
-                pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8))
+                pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/Collect.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True))
                 print("Clicked PVP_Samples/Collect")
                 pyautogui.moveTo(x, y)
 
@@ -273,10 +275,10 @@ def PvP_AutoThrough():
 
             Output_Eggs(T1_EGG_C, T2_EGG_C, T3_EGG_C, T4_EGG_C, T5_EGG_C)
 
-        if pyautogui.locateOnScreen("PVP_Samples/League.png", confidence=0.7):
+        if pyautogui.locateOnScreen("PVP_Samples/League.png", confidence=0.7, region=(0, 43, 900, 500), grayscale=True):
 
             (x, y) = pyautogui.position()
-            pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/League.png", confidence=0.8))
+            pyautogui.click(pyautogui.locateOnScreen("PVP_Samples/League.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True))
             pyautogui.moveTo(x, y)
 
             time.sleep(1)
@@ -353,6 +355,7 @@ def Stardust_Dungeon():
     Three_Nodes()
 
 def MonsterWood_AutoThrough2():
+    coordsButton = pyautogui.position()
     List_EXIT_SINGLE = [
         "MW_Samples/MW_EXIT_SINGLE.png",
         "MW_Samples/MW_EXIT_SINGLE2.png",
@@ -372,15 +375,20 @@ def MonsterWood_AutoThrough2():
         pyautogui.moveTo(x, y)
 
     def checkDoubleButtonAd():
-        if pyautogui.locateOnScreen("MW_Samples/MW_EXIT_DOUBLE.png", confidence=0.8):
+        if pyautogui.locateOnScreen("MW_Samples/MW_EXIT_DOUBLE.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True):
             return True
     
     def checkSingleButtonAd():
+        global coordsButton
+
         while True:
             for exits in List_EXIT_SINGLE:
-                if pyautogui.locateOnScreen(exits, confidence=0.8) != None: 
+                if pyautogui.locateOnScreen(exits, confidence=0.8, region=(0, 43, 900, 500), grayscale=True) != None: 
+                    coordsButton = pyautogui.locateOnScreen(exits, confidence=0.8, region=(0, 43, 900, 500), grayscale=True)
+                    print(str(exits))
                     return True
                     break
+                
             break
 
         return False
@@ -389,7 +397,10 @@ def MonsterWood_AutoThrough2():
         (x, y) = pyautogui.position()
 
         # Click on the frame of the window to activate it.
-        pyautogui.click(929, 371)
+        for i in range(6):
+            pyautogui.click(929, 371)
+            time.sleep(0.2)
+
         time.sleep(1)
 
         # Click on the Home tab.
@@ -404,9 +415,15 @@ def MonsterWood_AutoThrough2():
 
         pydirectinput.press("esc")
 
+    def checkRoulette():
+        if pyautogui.locateOnScreen("MW_Samples/MW_ROULETTE.png", confidence=0.8, region=(0, 43, 900, 500), grayscale=True):
+            return True
+        
+
     while True:
         MW_ADS_WATCHED = 0
         Error = False
+        collectedReward = False
 
         print("{} ads watched, next ad!".format(str(MW_ADS_WATCHED)))
 
@@ -425,8 +442,18 @@ def MonsterWood_AutoThrough2():
             time.sleep(33)
             print("Time to checkie checkie")
             
+
+            if checkRoulette() == True:
+                # Spins the roulette and exits
+                for spins in range(2):
+                    time.sleep(1)
+                    pydirectinput.press("up")
+
+                waitForScreen("MW_Samples/MW_ROULETTE_EXIT")
+                break
+
             # Checks if the ad closed itself.
-            if pyautogui.locateOnScreen("MW_Samples/MW_COLLECT.png", confidence=0.9):
+            if pyautogui.locateOnScreen("MW_Samples/MW_COLLECT.png", confidence=0.9, region=(0, 43, 900, 500), grayscale=True):
                 (x, y) = pyautogui.position()
 
                 # Click on the frame of the window to activate it.
@@ -434,6 +461,26 @@ def MonsterWood_AutoThrough2():
                 time.sleep(1)
 
                 pydirectinput.press("esc")
+                pyautogui.moveTo(x, y)
+
+                collectedReward = True
+                break
+
+            # Checks if a DoubleButton Ad popped up.
+            if checkDoubleButtonAd() == True:
+                print("DOUBLE")
+                (x, y) = pyautogui.position()
+
+                # Click on the frame of the window to activate it.
+                for i in range(6):
+                    pyautogui.click(929, 371)
+                    time.sleep(0.2)
+                time.sleep(1)
+
+                pydirectinput.press("esc")
+                time.sleep(0.5)
+                pydirectinput.press("esc")
+
                 pyautogui.moveTo(x, y)
                 break
 
@@ -443,24 +490,19 @@ def MonsterWood_AutoThrough2():
                 (x, y) = pyautogui.position()
 
                 # Click on the frame of the window to activate it.
-                pyautogui.click(929, 371)
+                for i in range(6):
+                    pyautogui.click(929, 371)
+                    time.sleep(0.2)
                 time.sleep(1)
 
-                pydirectinput.press("esc")
-                pyautogui.moveTo(x, y)
-                break
+                # Click on the Home tab.
+                pyautogui.click(204, 26)
+                time.sleep(0.4)
 
-            # Checks if a DoubleButton Ad popped up.
-            if checkDoubleButtonAd() == True:
-                print("DOUBLE")
-                (x, y) = pyautogui.position()
+                # Click on the Monsters tab.
+                pyautogui.click(362, 26)
+                time.sleep(2)
 
-                # Click on the frame of the window to activate it.
-                pyautogui.click(929, 371)
-                time.sleep(1)
-
-                pydirectinput.press("esc")
-                time.sleep(0.5)
                 pydirectinput.press("esc")
 
                 pyautogui.moveTo(x, y)
@@ -471,8 +513,29 @@ def MonsterWood_AutoThrough2():
                 break
 
         # Waiting for the Reward Popup to properly display.
-        time.sleep(2) 
-        waitForScreen("MW_Samples/MW_COLLECT")
+        time.sleep(2)
+
+        # Checks for a Roulette before reward
+        if checkRoulette() == True:
+                # Spins the roulette and exits
+                for spins in range(2):
+                    time.sleep(1)
+                    pydirectinput.press("up")
+
+                waitForScreen("MW_Samples/MW_ROULETTE_EXIT")
+                time.sleep(2)
+
+        if collectedReward == False: 
+            waitForScreen("MW_Samples/MW_COLLECT")
+
+def printCoordinates():
+    time.sleep(2)
+    print("top left: {}".format(pyautogui.position()))
+
+    time.sleep(2)
+    print("bottom right: {}".format(pyautogui.position()))
+
+
 
 choice = input(print("""
 1. Buy_100_Rare()
@@ -487,6 +550,6 @@ if choice == "1": Buy_100_Rare()
 if choice == "2": PvP_AutoThrough()
 if choice == "3": Stardust_Dungeon()
 if choice == "4": MonsterWood_AutoThrough2()
-
+if choice == "5": printCoordinates()
 
 
