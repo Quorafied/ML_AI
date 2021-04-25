@@ -542,7 +542,7 @@ choice = input(print("""
 2. PvP_AutoThrough()
 3. Stardust_Dungeon()
 4. MonsterWood_AutoThrough()
-
+5. printCoordinates()
 >>
 """))
 
