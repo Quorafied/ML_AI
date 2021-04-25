@@ -27,7 +27,7 @@ An autoClicker is present so that instead of tapping 100 times to purchase avail
 the program will click 100 times at the location of the cursor, although, click intervals is higher 
 due to what is used for the program, pydirectinput clicks.
 #### Demo
-![](https://imgur.com/a/wS3Z0Gd)
+https://imgur.com/a/wS3Z0Gd
 
 ### Monster Wood Ads
 The bot is presented with a tool that goes itself through all ads that it is presented to itself during events.
