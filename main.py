@@ -21,6 +21,7 @@ tries = 0
 
 def waitForScreen(obj):
     tries = 0
+    time.sleep(0.6)
     while True:
         im1 = pyautogui.screenshot("my_screenshot.png", region=(0, 43, 900, 500))
         print("Looking for {}".format(str(obj)))
@@ -60,6 +61,7 @@ def PvP_AutoThrough():
     wins = 0
     loses = 0
 
+    timeElapsedArray = []
 
     T1_EGG_C = 0
     T2_EGG_C = 0    
@@ -104,6 +106,8 @@ def PvP_AutoThrough():
 
 
     while True:
+        timeStart = time.time()
+
         count += 1
         print("Battles done: {}".format(count))
 
@@ -178,10 +182,12 @@ def PvP_AutoThrough():
                 print("Clicked PVP_Samples/Collect")
                 pyautogui.moveTo(x, y)
 
-                time.sleep(0.4)
+                time.sleep(0.6)
 
                 waitForScreen("PVP_Samples/Back")
                 print("Clicked PVP_Samples/Back")
+
+                time.sleep(0.4)
 
                 waitForScreen("PVP_Samples/Discard")
                 print("Clicked PVP_Samples/Discard")
@@ -257,10 +263,12 @@ def PvP_AutoThrough():
                 print("Clicked PVP_Samples/Collect")
                 pyautogui.moveTo(x, y)
 
-                time.sleep(0.4)
+                time.sleep(0.6)
 
                 waitForScreen("PVP_Samples/Back")
                 print("Clicked PVP_Samples/Back")
+                
+                time.sleep(0.4)
 
                 waitForScreen("PVP_Samples/Discard")
                 print("Clicked PVP_Samples/Discard")
@@ -286,10 +294,17 @@ def PvP_AutoThrough():
             (x, y) = pyautogui.position()
             pyautogui.click(326, 115)
             pyautogui.moveTo(x, y)
+        
+        timeEnd = time.time()
+        timeElapsedArray.append(timeEnd - timeStart)
 
-def Stardust_Dungeon():
-    def Dungeon_Repeat():
+        # If program looped in multiples of 10 times, output the list.
+        if count%2 == 0:
+            print(str(timeElapsedArray))
 
+def Dungeons():
+
+    def Dungeon_Node():
         waitForScreen("Fight_Stamina")
         time.sleep(1)
 
@@ -309,11 +324,27 @@ def Stardust_Dungeon():
 
     def Three_Nodes():
         for i in range(3):
-            Dungeon_Repeat()
+            Dungeon_Node()
 
-    def One_Node():
-        Dungeon_Repeat()
+    def One_Node():    
+        Dungeon_Node()
 
+    def Resource_Dungeon():
+        print("i")
+
+    
+    choice = input
+    (
+        """
+        1) Resource Dungeon
+        2) Lutum Dungeon            
+        """
+    )
+
+    if choice == "1":
+        Resource_Dungeon()
+    if choice == "2":
+        print("Doing Lutum Dungeon")
 
     # Moves the cursor in a position to which it will drag.
     pyautogui.moveTo(668, 356)
@@ -527,6 +558,8 @@ def MonsterWood_AutoThrough2():
 
         if collectedReward == False: 
             waitForScreen("MW_Samples/MW_COLLECT")
+        
+        MW_ADS_WATCHED += 1
 
 def printCoordinates():
     time.sleep(2)
@@ -536,11 +569,10 @@ def printCoordinates():
     print("bottom right: {}".format(pyautogui.position()))
 
 
-
 choice = input(print("""
 1. Buy_100_Rare()
 2. PvP_AutoThrough()
-3. Stardust_Dungeon()
+3. Dungeons()
 4. MonsterWood_AutoThrough()
 5. printCoordinates()
 >>
@@ -548,8 +580,9 @@ choice = input(print("""
 
 if choice == "1": Buy_100_Rare()
 if choice == "2": PvP_AutoThrough()
-if choice == "3": Stardust_Dungeon()
+if choice == "3": Dungeons()
 if choice == "4": MonsterWood_AutoThrough2()
 if choice == "5": printCoordinates()
+
 
 
