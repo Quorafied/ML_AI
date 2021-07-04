@@ -1,4 +1,4 @@
-# Monster Legends AI
+# Monster Legends AI (Outdated & Discontinued)
 # A Monster Legends IR multi-bot
 <table>
 <tr>
